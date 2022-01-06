@@ -7,19 +7,37 @@ PRICE_EXCLUDING_TAX = "Price (excl. tax)"
 AVAILABILITY = "Availability"
 
 
-def extract_td_from_th(table, caracteristic: str):
+def extract_td_from_th(table: BeautifulSoup, caracteristic_name: str):
+    """Returns the data from the book characteristics table based on the characteristic name.
+
+            Args:
+                table (BeautifulSoup): BeautifulSoup object pointing to the table of characteristics
+                caracteristic_name (str): Name of the desired characteristic
+
+            Returns:
+                caracteristic (str): the desired caracteristic
+            """
     trs = table.find_all("tr")
     for tr in trs:
         th = tr.find("th").get_text()
         td = tr.find("td").get_text()
         # print(f"{th}: {td}")
-        if th == caracteristic:
-            product_page_url = td
-            return product_page_url
+        if th == caracteristic_name:
+            caracteristic = td
+            return caracteristic
 
 
-def number_in_stock(table, caracteristic):
-    number_available_str = extract_td_from_th(table=table, caracteristic=caracteristic)
+def number_in_stock(table: BeautifulSoup, caracteristic_name):
+    """Returns the quantity of items in stock.
+
+                Args:
+                    table (BeautifulSoup): BeautifulSoup object pointing to the table of characteristics
+                    caracteristic_name (str): Name of the desired characteristic
+
+                Returns:
+                    int: number of items available
+                """
+    number_available_str = extract_td_from_th(table=table, caracteristic_name=caracteristic_name)
     if number_available_str.startswith("In stock"):
         number_available = int(number_available_str.split("In stock (")[1].split(" available)")[0])
         return number_available
@@ -49,6 +67,14 @@ def rating(str_rating: str):
 
 
 def extract_one_book(book_url: str):
+    """Extract data from a work.
+
+            Args:
+                book_url (str): URL to scrape
+
+            Returns:
+                dic: dictionary containing the desired data
+            """
     response = requests.get(url=book_url)
     response.raise_for_status()
 
@@ -62,24 +88,18 @@ def extract_one_book(book_url: str):
 
         # prepare table
         table = soup.find("table", {"class": "table-striped"})
-        trs = table.find_all("tr")
-        # print(trs)
-        for tr in trs:
-            th = tr.find("th").get_text()
-            td = tr.find("td").get_text()
-            print(f"{th}: {td}")
 
         # upc section, price_including_tax, price_excluding_tax, number_available
-        universal_product_code = extract_td_from_th(table=table, caracteristic=UPC_TEXT)
+        universal_product_code = extract_td_from_th(table=table, caracteristic_name=UPC_TEXT)
         print(universal_product_code)
 
-        price_including_tax = extract_td_from_th(table=table, caracteristic=PRICE_INCLUDING_TAX)
+        price_including_tax = extract_td_from_th(table=table, caracteristic_name=PRICE_INCLUDING_TAX)
         print(price_including_tax)
 
-        price_excluding_tax = extract_td_from_th(table=table, caracteristic=PRICE_EXCLUDING_TAX)
+        price_excluding_tax = extract_td_from_th(table=table, caracteristic_name=PRICE_EXCLUDING_TAX)
         print(price_excluding_tax)
 
-        number_available = number_in_stock(table=table, caracteristic=AVAILABILITY)
+        number_available = number_in_stock(table=table, caracteristic_name=AVAILABILITY)
         print(f"Number available: {number_available}")
 
         # title

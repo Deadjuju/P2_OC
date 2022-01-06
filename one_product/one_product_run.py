@@ -25,12 +25,14 @@ labels = ["product_page_url",
           "review_rating",
           "image_url"]
 
-# chemin d'extraction des données
+# data extraction path
 current_dir = Path.cwd()
 print(current_dir.cwd())
 path_to_extract_one_product = current_dir / ".." / "extracts" / "extract_one_product"
 path_to_extract_one_product.mkdir(exist_ok=True)
 
+
+# save data to csv file
 with open(file=f'{path_to_extract_one_product}/extract.csv', mode='w', encoding="utf-8", newline="") as f:
     writer = csv.DictWriter(f, fieldnames=labels)
     writer.writeheader()
