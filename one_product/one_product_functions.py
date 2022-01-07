@@ -91,16 +91,12 @@ def extract_one_book(book_url: str):
 
         # upc section, price_including_tax, price_excluding_tax, number_available
         universal_product_code = extract_td_from_th(table=table, caracteristic_name=UPC_TEXT)
-        print(universal_product_code)
 
         price_including_tax = extract_td_from_th(table=table, caracteristic_name=PRICE_INCLUDING_TAX)
-        print(price_including_tax)
 
         price_excluding_tax = extract_td_from_th(table=table, caracteristic_name=PRICE_EXCLUDING_TAX)
-        print(price_excluding_tax)
 
         number_available = number_in_stock(table=table, caracteristic_name=AVAILABILITY)
-        print(f"Number available: {number_available}")
 
         # title
         title = soup.find("h1").get_text()
@@ -108,7 +104,6 @@ def extract_one_book(book_url: str):
 
         # product_description
         product_description = soup.find("div", {"id": "product_description"}).findNext('p').get_text()
-        print(f"Description: {product_description}")
 
         # category
         breadcrumb = soup.find("ul", {"class": "breadcrumb"})
@@ -119,12 +114,10 @@ def extract_one_book(book_url: str):
         product_main = soup.find("div", {"class": "product_main"})
         str_rating = product_main.find("p", {"class": "star-rating"})["class"][1]
         review_rating = rating(str_rating=str_rating)
-        print(f"Review rating: {review_rating}")
 
         # image_url
         img = soup.find("img")["src"]
         image_url = img.replace("../..", "https://books.toscrape.com")
-        print(f"Img: {image_url}")
 
         return {
             "product_page_url": product_page_url,
