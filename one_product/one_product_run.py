@@ -6,8 +6,9 @@ from pathlib import Path
 
 from one_product_functions import extract_one_book
 
-URL = "https://books.toscrape.com/catalogue/william-shakespeares-star-wars-verily-a-new-hope-william-shakespeares" \
-      "-star-wars-4_871/index.html"
+# URL = "https://books.toscrape.com/catalogue/william-shakespeares-star-wars-verily-a-new-hope-william-shakespeares" \
+#       "-star-wars-4_871/index.html"
+URL = "https://books.toscrape.com/catalogue/alice-in-wonderland-alices-adventures-in-wonderland-1_5/index.html"
 END_MESSAGE = "INFORMATION: End of extraction"
 LABELS = ["product_page_url",
           "universal_ product_code (upc)",
@@ -29,7 +30,9 @@ datas_list = [datas]
 # data extraction path
 current_dir = Path.cwd()
 print(current_dir.cwd())
-path_to_extract_one_product = current_dir / ".." / "extracts" / "extract_one_product"
+path_to_extract = current_dir / ".." / "extracts"
+path_to_extract.mkdir(exist_ok=True)
+path_to_extract_one_product = path_to_extract / "extract_one_product"
 path_to_extract_one_product.mkdir(exist_ok=True)
 
 

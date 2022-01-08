@@ -100,15 +100,18 @@ def extract_one_book(book_url: str):
 
         # title
         title = soup.find("h1").get_text()
-        print(f"Title: {title}")
+        # print(f"Title: {title}")
 
         # product_description
-        product_description = soup.find("div", {"id": "product_description"}).findNext('p').get_text()
+        try:
+            product_description = soup.find("div", {"id": "product_description"}).findNext('p').get_text()
+        except AttributeError:
+            product_description = "- NO DESCRIPTION -"
 
         # category
         breadcrumb = soup.find("ul", {"class": "breadcrumb"})
         category = breadcrumb.find("li", {"class": "active"}).findPrevious("li").find("a").get_text()
-        print(f"Category: {category}")
+        # print(f"Category: {category}")
 
         # review_rating
         product_main = soup.find("div", {"class": "product_main"})

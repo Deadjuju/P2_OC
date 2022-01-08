@@ -49,6 +49,7 @@ def get_urls_book_category(url: str):
                     i += 1
                 else:
                     url_to_scrap = f"{url_to_scrap_without_index}{new_url}"
+                    i += 1
 
                 # Get the others book urls
                 url_list += get_urls_book_category_first_page(url_category=url_to_scrap)

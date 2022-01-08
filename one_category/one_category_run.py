@@ -39,7 +39,9 @@ for url in url_list_for_category:
 
 # data extraction path
 current_dir = Path.cwd()
-path_to_extract_one_category = current_dir / ".." / "extracts" / "extract_one_category"
+path_to_extract = current_dir / ".." / "extracts"
+path_to_extract.mkdir(exist_ok=True)
+path_to_extract_one_category = path_to_extract / "extract_one_category"
 path_to_extract_one_category.mkdir(exist_ok=True)
 
 
