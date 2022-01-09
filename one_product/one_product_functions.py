@@ -7,6 +7,23 @@ PRICE_EXCLUDING_TAX = "Price (excl. tax)"
 AVAILABILITY = "Availability"
 
 
+def validate_url():
+    while True:
+        url = input("Please type the url of the book you want to analyze:\n  --> ")
+        if url.startswith("https://books.toscrape.com"):
+            response = requests.get(url=url)
+            if response.status_code == 200:
+                print(f"INFORMATION: -- {url} -- Valid URL. ")
+                return url
+            else:
+                print(f"ERROR: -- {url} -- This url does not work.")
+        else:
+            if url.startswith("https://"):
+                print(f"ERROR: -- {url} -- This url does not link to the site of 'Books to Scrape'.")
+            else:
+                print(f"ERROR: -- {url} -- is not an url. Please enter an URL.")
+
+
 def extract_td_from_th(table: BeautifulSoup, caracteristic_name: str):
     """Returns the data from the book characteristics table based on the characteristic name.
 
@@ -82,20 +99,15 @@ def extract_one_book(book_url: str):
 
         # parse the page
         soup = BeautifulSoup(response.content, 'lxml')
-
         # product_page_url section
         product_page_url = book_url
-
         # prepare table
         table = soup.find("table", {"class": "table-striped"})
 
         # upc section, price_including_tax, price_excluding_tax, number_available
         universal_product_code = extract_td_from_th(table=table, caracteristic_name=UPC_TEXT)
-
         price_including_tax = extract_td_from_th(table=table, caracteristic_name=PRICE_INCLUDING_TAX)
-
         price_excluding_tax = extract_td_from_th(table=table, caracteristic_name=PRICE_EXCLUDING_TAX)
-
         number_available = number_in_stock(table=table, caracteristic_name=AVAILABILITY)
 
         # title
@@ -111,7 +123,6 @@ def extract_one_book(book_url: str):
         # category
         breadcrumb = soup.find("ul", {"class": "breadcrumb"})
         category = breadcrumb.find("li", {"class": "active"}).findPrevious("li").find("a").get_text()
-        # print(f"Category: {category}")
 
         # review_rating
         product_main = soup.find("div", {"class": "product_main"})

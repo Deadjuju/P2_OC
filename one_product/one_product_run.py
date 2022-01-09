@@ -1,14 +1,9 @@
-import requests
-from bs4 import BeautifulSoup
-import lxml
 import csv
 from pathlib import Path
 
-from one_product_functions import extract_one_book
+from one_product_functions import extract_one_book, validate_url
 
-# URL = "https://books.toscrape.com/catalogue/william-shakespeares-star-wars-verily-a-new-hope-william-shakespeares" \
-#       "-star-wars-4_871/index.html"
-URL = "https://books.toscrape.com/catalogue/alice-in-wonderland-alices-adventures-in-wonderland-1_5/index.html"
+
 END_MESSAGE = "INFORMATION: End of extraction"
 LABELS = ["product_page_url",
           "universal_ product_code (upc)",
@@ -22,9 +17,9 @@ LABELS = ["product_page_url",
           "image_url"]
 
 
-datas = extract_one_book(book_url=URL)
-print(datas)
+url = validate_url()
 
+datas = extract_one_book(book_url=url)
 datas_list = [datas]
 
 # data extraction path
@@ -43,4 +38,4 @@ with open(file=f'{path_to_extract_one_product}/extract.csv', mode='w', encoding=
     for elem in datas_list:
         writer.writerow(elem)
 
-print(END_MESSAGE)
+print(f"END_MESSAGE -> {datas['title']}")
