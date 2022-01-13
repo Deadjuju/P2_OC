@@ -17,6 +17,7 @@ LABELS = ["product_page_url",
           "image_url"]
 
 
+# type a correct url
 url = validate_url()
 
 datas = extract_one_book(book_url=url)
