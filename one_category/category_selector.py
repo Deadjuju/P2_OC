@@ -8,12 +8,19 @@ with open(file="../category_lists/category_list.json", mode="r", encoding="utf-8
 
 
 def category_choice():
+    """Asks the user to choose a category.
+    Can display the list of all categories if needed.
+
+                Args:
+                Returns:
+                    tuple: (first page url of the desired category, category name )
+                """
     while True:
         which_category = input("Please type the name of the category to scrape:\n"
                                "To see the categories type 'list'\n"
                                "-->  | ").lower()
         if which_category in catego_dico:
-            return catego_dico[which_category]
+            return catego_dico[which_category], which_category
         else:
             if which_category == "list" or which_category == "l":
                 print(catego_list)
