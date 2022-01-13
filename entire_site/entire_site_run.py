@@ -40,11 +40,13 @@ with open(file="../category_lists/category_list.json", mode="r", encoding="utf-8
 
 # iterate for each url's category
 j = 1
+url_list_for_category = []
 for category, url_category in catego_dico.items():
     print(category, url_category)
 
     # recupe urls to scrape (/ category)
-    url_list_for_category = get_urls_book_category(url=url_category)
+    url_list_for_category = get_urls_book_category(url_to_scrap=url_category)
+    print(f"URL LIST FOR CATEGORY: {url_list_for_category}")
 
     print(f"INFORMATION: Start to extract book from {category}")
 
