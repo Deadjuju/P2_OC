@@ -1,5 +1,6 @@
 import requests
 from bs4 import BeautifulSoup
+import time
 
 UPC_TEXT = "UPC"
 PRICE_INCLUDING_TAX = "Price (incl. tax)"
@@ -8,6 +9,12 @@ AVAILABILITY = "Availability"
 
 
 def validate_url():
+    """Return the url to scrap after checking it
+
+                Args:
+                Returns:
+                    url (str): the url to scrap
+                """
     while True:
         url = input("Please type the url of the book you want to analyze:\n  --> ")
         if url.startswith("https://books.toscrape.com"):
@@ -16,6 +23,8 @@ def validate_url():
                 print(f"INFORMATION: -- {url} -- Valid URL. ")
                 return url
             else:
+                print("\nTrying to connect....")
+                time.sleep(1)
                 print(f"ERROR: -- {url} -- This url does not work.")
         else:
             if url.startswith("https://"):
@@ -38,7 +47,6 @@ def extract_td_from_th(table: BeautifulSoup, caracteristic_name: str):
     for tr in trs:
         th = tr.find("th").get_text()
         td = tr.find("td").get_text()
-        # print(f"{th}: {td}")
         if th == caracteristic_name:
             caracteristic = td
             return caracteristic
