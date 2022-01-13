@@ -4,6 +4,14 @@ import lxml
 
 
 def get_urls_book_category_first_page(url_category):
+    """Extract urls's book from 1st page for one category.
+
+                Args:
+                    url_category (str): URL to scrape
+
+                Returns:
+                    list: urls of all books on the page
+                """
     print("INFORMATION: Start loading book urls _ _ _ ")
     response = requests.get(url=url_category)
     response.raise_for_status()
@@ -25,9 +33,18 @@ def get_urls_book_category_first_page(url_category):
         return url_list
 
 
-def get_urls_book_category(url: str):
-    url_to_scrap = url
+def get_urls_book_category(url_to_scrap: str):
+    """Extract all urls from all books for a single category.
+
+                Args:
+                    url_to_scrap (str): URL to scrape
+
+                Returns:
+                    list: List of urls
+                """
     url_to_scrap_without_index = url_to_scrap.split("index.html")[0]
+
+    # Get the urls of the first page for each book
     url_list = get_urls_book_category_first_page(url_category=url_to_scrap)
 
     # Check for the existence of a "next" button
