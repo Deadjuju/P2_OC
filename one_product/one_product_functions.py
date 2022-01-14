@@ -91,11 +91,32 @@ def rating(str_rating: str):
         return 5
 
 
-def extract_one_book(book_url: str):
+def extract_cover(title: str, img_url: str, path_to_extract_images):
+    """Extract the cover of a book.
+
+            Args:
+                title (str): title of the book
+                img_url(str): url of the cover
+                path_to_extract_images (WindowsPath): path to save the cover
+
+            """
+    # generate img
+    specialChars = "?!#$%^&*():'’,.;\"'/ "
+    for specialChar in specialChars:
+        title = title.replace(specialChar, '_')
+    f = open(f'{path_to_extract_images}\\{title}.jpg', 'wb')
+    img = requests.get(img_url)
+    f.write(img.content)
+    f.close()
+
+
+def extract_one_book(book_url: str, cover=False, img_path=None):
     """Extract data from a work.
 
             Args:
                 book_url (str): URL to scrape
+                cover(bool): True to extract cover
+                img_path(): Path to extract img
 
             Returns:
                 dic: dictionary containing the desired data
@@ -140,6 +161,9 @@ def extract_one_book(book_url: str):
         # image_url
         img = soup.find("img")["src"]
         image_url = img.replace("../..", "https://books.toscrape.com")
+
+        if cover:
+            extract_cover(title=title, img_url=image_url, path_to_extract_images=img_path)
 
         return {
             "product_page_url": product_page_url,
