@@ -2,11 +2,14 @@ import json
 import csv
 from pathlib import Path
 import requests
+import time
 
 from one_category.list_urls_book_one_category import get_urls_book_category
 from one_product.one_product_functions import extract_one_book
+from entire_site_functions import save_extract
 
 
+start = time.time()
 END_MESSAGE = "INFORMATION: End of extraction of entire site."
 LABELS = ["product_page_url",
           "universal_ product_code (upc)",
@@ -77,12 +80,21 @@ for category, url_category in catego_dico.items():
     j += 1
 
     # save data to csv file
-    file_name = f"{category.replace(' ', '_')}__extract.csv"
-    with open(file=f'{path_to_extract_category}/{file_name}', mode='w', encoding="utf-8", newline="") as f:
-        writer = csv.DictWriter(f, fieldnames=LABELS)
-        writer.writeheader()
-        for elem in datas_list:
-            writer.writerow(elem)
+    save_extract(category=category,
+                 path=path_to_extract_category,
+                 labels=LABELS,
+                 datas_list=datas_list)
+    # # save data to csv file
+    # file_name = f"{category.replace(' ', '_')}__extract.csv"
+    # with open(file=f'{path_to_extract_category}/{file_name}', mode='w', encoding="utf-8", newline="") as f:
+    #     writer = csv.DictWriter(f, fieldnames=LABELS)
+    #     writer.writeheader()
+    #     for elem in datas_list:
+    #         writer.writerow(elem)
 
 print(END_MESSAGE)
+
+
+end = time.time()
+print(end - start)
 
