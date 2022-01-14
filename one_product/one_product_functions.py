@@ -100,14 +100,26 @@ def extract_cover(title: str, img_url: str, path_to_extract_images):
                 path_to_extract_images (WindowsPath): path to save the cover
 
             """
+    # format title
+    title = format_text(string_to_format=title)
     # generate img
-    specialChars = "?!#$%^&*():'’,.;\"'/ "
-    for specialChar in specialChars:
-        title = title.replace(specialChar, '_')
-    f = open(f'{path_to_extract_images}\\{title}.jpg', 'wb')
-    img = requests.get(img_url)
-    f.write(img.content)
-    f.close()
+    with open(f'{path_to_extract_images}\\{title}.jpg', 'wb') as f:
+        img = requests.get(img_url)
+        f.write(img.content)
+
+
+def format_text(string_to_format):
+    """Remove special characters from a string .
+
+                Args:
+                    string_to_format (str): string to format
+                Returns:
+                    str: formatted string
+                """
+    special_chars = "?!#$%^&*():'’,.;\"'/ "
+    for special_char in special_chars:
+        string_to_format = string_to_format.replace(special_char, '_')
+    return string_to_format
 
 
 def extract_one_book(book_url: str, cover=False, img_path=None):
@@ -121,6 +133,8 @@ def extract_one_book(book_url: str, cover=False, img_path=None):
             Returns:
                 dic: dictionary containing the desired data
             """
+
+    # Connect to the site and if all goes well (response 200) we continue
     response = requests.get(url=book_url)
     response.raise_for_status()
 

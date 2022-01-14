@@ -2,7 +2,7 @@ import csv
 from pathlib import Path
 import time
 
-from one_product_functions import extract_one_book, validate_url
+from one_product_functions import extract_one_book, validate_url, format_text
 
 
 END_MESSAGE = "INFORMATION: End of extraction"
@@ -26,23 +26,19 @@ start = time.time()
 
 # data extraction path
 current_dir = Path.cwd()
-print(current_dir.cwd())
 path_to_extract = current_dir / ".." / "extracts"
 path_to_extract.mkdir(exist_ok=True)
 path_to_extract_one_product = path_to_extract / "extract_one_product"
 path_to_extract_one_product.mkdir(exist_ok=True)
 
 
+# Extract data
 datas = extract_one_book(book_url=url, cover=True, img_path=path_to_extract_one_product)
-print(type(path_to_extract_one_product))
 
 
 # Format title
 title = datas["title"]
-formatted_title = title
-specialChars = "?!#$%^&*():'’,.;\"'/ "
-for specialChar in specialChars:
-    formatted_title = formatted_title.replace(specialChar, '_')
+formatted_title = format_text(string_to_format=title)
 file_name = f"{formatted_title}_extract"
 
 
