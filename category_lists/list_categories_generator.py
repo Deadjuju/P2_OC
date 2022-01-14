@@ -16,7 +16,7 @@ if response.status_code == 200:
     div_categories = soup.find("div", {"class": "side_categories"}).find("li").find_all("li")
 
     for category in div_categories:
-        # Retrieve the category (key) and the associated url (value)
+        # Get the category (key) and the associated url (value)
         link_category = category.find("a")
         catego = link_category.get_text().strip().lower()
 
@@ -30,9 +30,11 @@ if response.status_code == 200:
 print(category_dico)
 
 
+# Save list of categories
 with open(file="dico_category_list.json", mode="w", encoding="utf-8") as json_f:
     json.dump(obj=category_dico, fp=json_f, indent=4, ensure_ascii=True)
 
+# Save dict with list of categories & url
 with open(file="category_list.json", mode="w", encoding="utf-8") as json_f:
     json.dump(obj=category_list, fp=json_f, indent=4, ensure_ascii=True)
 
