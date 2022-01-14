@@ -21,7 +21,6 @@ LABELS = ["product_page_url",
 url = validate_url()
 
 datas = extract_one_book(book_url=url)
-datas_list = [datas]
 
 # data extraction path
 current_dir = Path.cwd()
@@ -32,11 +31,17 @@ path_to_extract_one_product = path_to_extract / "extract_one_product"
 path_to_extract_one_product.mkdir(exist_ok=True)
 
 
+# Format title
+title = datas["title"]
+specialChars = "?!#$%^&*():'’,.;\"'/ "
+for specialChar in specialChars:
+    formatted_title = title.replace(specialChar, '_')
+
+
 # save data to csv file
-with open(file=f'{path_to_extract_one_product}/extract.csv', mode='w', encoding="utf-8", newline="") as f:
+with open(file=f'{path_to_extract_one_product}/extract_{formatted_title}.csv', mode='w', encoding="utf-8", newline="") as f:
     writer = csv.DictWriter(f, fieldnames=LABELS)
     writer.writeheader()
-    for elem in datas_list:
-        writer.writerow(elem)
+    writer.writerow(datas)
 
 print(f"END_MESSAGE -> {datas['title']}")
