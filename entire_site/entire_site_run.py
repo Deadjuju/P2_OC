@@ -29,10 +29,6 @@ path_to_extract = current_dir / ".." / "extracts"
 path_to_extract.mkdir(exist_ok=True)
 path_to_extract_entire_site = path_to_extract / "extract_entire_site"
 path_to_extract_entire_site.mkdir(exist_ok=True)
-path_to_extract_category = path_to_extract_entire_site / "categories"
-path_to_extract_category.mkdir(exist_ok=True)
-path_to_extract_images = path_to_extract_entire_site / "images"
-path_to_extract_images.mkdir(exist_ok=True)
 
 
 with open(file="../category_lists/dico_category_list.json", mode="r", encoding="utf-8") as f:
@@ -47,32 +43,27 @@ url_list_for_category = []
 for category, url_category in catego_dico.items():
     print(category, url_category)
 
+    # create path to extract the category & the covers
+    path_to_extract_category = path_to_extract_entire_site / category
+    path_to_extract_category.mkdir(exist_ok=True)
+    path_to_extract_images = path_to_extract_category / "images"
+    path_to_extract_images.mkdir(exist_ok=True)
+
     # recupe urls to scrape (/ category)
     url_list_for_category = get_urls_book_category(url_to_scrap=url_category)
     print(f"URL LIST FOR CATEGORY: {url_list_for_category}")
 
-    print(f"INFORMATION: Start to extract book from {category}")
+    print(f"INFORMATION: Start to extract books from {category}.")
 
     # extract data for each book, stock in a list
+    # extract covers
     i = 1
     datas_list = []
     for url in url_list_for_category:
         print(f"Category {category}: {j}/{(len(catego_dico))}\n"
               f"Page {i}/{len(url_list_for_category)}")
 
-        data = extract_one_book(book_url=url)
-        # print(f"Data\n{data}")
-
-        # generate img
-        title = data["title"]
-        specialChars = "?!#$%^&*():'’,.;\"'/ "
-        for specialChar in specialChars:
-            title = title.replace(specialChar, '_')
-        url_image = data["image_url"]
-        f = open(f'{path_to_extract_images}\\{title}.jpg', 'wb')
-        img = requests.get(url_image)
-        f.write(img.content)
-        f.close()
+        data = extract_one_book(book_url=url, cover=True, img_path=path_to_extract_images)
 
         datas_list.append(data)
 
@@ -84,17 +75,10 @@ for category, url_category in catego_dico.items():
                  path=path_to_extract_category,
                  labels=LABELS,
                  datas_list=datas_list)
-    # # save data to csv file
-    # file_name = f"{category.replace(' ', '_')}__extract.csv"
-    # with open(file=f'{path_to_extract_category}/{file_name}', mode='w', encoding="utf-8", newline="") as f:
-    #     writer = csv.DictWriter(f, fieldnames=LABELS)
-    #     writer.writeheader()
-    #     for elem in datas_list:
-    #         writer.writerow(elem)
+
 
 print(END_MESSAGE)
 
 
 end = time.time()
-print(end - start)
-
+print(f"Execution time: {end - start} sec")
