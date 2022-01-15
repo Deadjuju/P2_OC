@@ -103,9 +103,12 @@ def extract_cover(title: str, img_url: str, path_to_extract_images):
     # format title
     title = format_text(string_to_format=title)
     # generate img
-    with open(f'{path_to_extract_images}\\{title}.jpg', 'wb') as f:
-        img = requests.get(img_url)
-        f.write(img.content)
+    try:
+        with open(f'{path_to_extract_images}\\{title}.jpg', 'wb') as f:
+            img = requests.get(img_url)
+            f.write(img.content)
+    except FileNotFoundError:
+        print("INFORMATION: You must specify a path to save the images.")
 
 
 def format_text(string_to_format):
