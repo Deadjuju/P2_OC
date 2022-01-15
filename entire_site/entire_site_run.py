@@ -5,7 +5,7 @@ import requests
 import time
 
 from one_category.list_urls_book_one_category import get_urls_book_category
-from one_product.one_product_functions import extract_one_book
+from one_product.one_product_functions import extract_one_book, extract_cover_choice
 from entire_site_functions import save_extract
 
 
@@ -21,6 +21,10 @@ LABELS = ["product_page_url",
           "category",
           "review_rating",
           "image_url"]
+
+
+# Extract cover True or False
+cover = extract_cover_choice()
 
 
 # data extraction path
@@ -47,7 +51,8 @@ for category, url_category in catego_dico.items():
     path_to_extract_category = path_to_extract_entire_site / category
     path_to_extract_category.mkdir(exist_ok=True)
     path_to_extract_images = path_to_extract_category / "images"
-    path_to_extract_images.mkdir(exist_ok=True)
+    if cover:
+        path_to_extract_images.mkdir(exist_ok=True)
 
     # recupe urls to scrape (/ category)
     url_list_for_category = get_urls_book_category(url_to_scrap=url_category)
@@ -63,7 +68,7 @@ for category, url_category in catego_dico.items():
         print(f"Category {category}: {j}/{(len(catego_dico))}\n"
               f"Page {i}/{len(url_list_for_category)}")
 
-        data = extract_one_book(book_url=url, cover=True, img_path=path_to_extract_images)
+        data = extract_one_book(book_url=url, cover=cover, img_path=path_to_extract_images)
 
         datas_list.append(data)
 

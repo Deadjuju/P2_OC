@@ -3,7 +3,7 @@ from pathlib import Path
 import time
 
 from list_urls_book_one_category import get_urls_book_category
-from one_product.one_product_functions import extract_one_book
+from one_product.one_product_functions import extract_one_book, extract_cover_choice
 from category_selector import category_choice
 
 END_MESSAGE = "INFORMATION: End of extraction"
@@ -24,6 +24,10 @@ url_category_to_scrap = choose_a_category[0]
 category_name = choose_a_category[1]
 
 
+# Extract cover True or False
+cover = extract_cover_choice()
+
+
 start = time.time()
 
 
@@ -42,8 +46,10 @@ category_name = category_name.replace(" ", "_")
 path_directory_category = path_to_extract_one_category / category_name
 path_directory_category.mkdir(exist_ok=True)
 path_directory_img = path_directory_category / "img_directory"
-path_directory_img.mkdir(exist_ok=True)
+if cover:
+    path_directory_img.mkdir(exist_ok=True)
 extract_file = f"{category_name}_extract.csv"
+
 
 # extract data for each book, stock in a list
 i = 1
@@ -51,7 +57,7 @@ datas_list = []
 for url in url_list_for_category:
     print(f"{i}/{len(url_list_for_category)}")
 
-    data = extract_one_book(book_url=url, cover=True, img_path=path_directory_img)
+    data = extract_one_book(book_url=url, cover=cover, img_path=path_directory_img)
     datas_list.append(data)
 
     i += 1
