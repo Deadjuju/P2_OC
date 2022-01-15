@@ -2,7 +2,7 @@ import csv
 from pathlib import Path
 import time
 
-from one_product_functions import extract_one_book, validate_url, format_text
+from one_product_functions import extract_one_book, validate_url, format_text, extract_cover_choice
 
 
 END_MESSAGE = "INFORMATION: End of extraction"
@@ -32,8 +32,12 @@ path_to_extract_one_product = path_to_extract / "extract_one_product"
 path_to_extract_one_product.mkdir(exist_ok=True)
 
 
+# Extract cover True or False
+cover = extract_cover_choice()
+
+
 # Extract data
-datas = extract_one_book(book_url=url, cover=True, img_path=path_to_extract_one_product)
+datas = extract_one_book(book_url=url, cover=cover, img_path=path_to_extract_one_product)
 
 
 # Format title

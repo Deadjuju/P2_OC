@@ -125,6 +125,21 @@ def format_text(string_to_format):
     return string_to_format
 
 
+def extract_cover_choice():
+    """Ask the user if he wants to extract the covers.
+
+                Returns:
+                    Bool: True if the user wants to extract the images
+                """
+    choice = input("Do you want to extract book covers?\n"
+                   "Type 'Y' for yes.\n"
+                   "|| --> ").lower()
+    if choice == "yes" or choice == "y" or choice == "oui":
+        return True
+    else:
+        return False
+
+
 def extract_one_book(book_url: str, cover=False, img_path=None):
     """Extract data from a work.
 
