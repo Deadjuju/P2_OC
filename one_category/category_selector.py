@@ -12,9 +12,14 @@ def load_file(file: str):
         Returns:
             list: requested file (list).
     """
-    with open(file=file, mode="r", encoding="utf-8") as f:
-        requested_file = json.load(f)
-    return requested_file
+    try:
+        with open(file=file, mode="r", encoding="utf-8") as f:
+            requested_file = json.load(f)
+    except FileNotFoundError:
+        print(f"ERROR: file - {file} does not exist."
+              f"You can create it by running the script --> 'category_lists/list_categories_generator.py'.")
+    else:
+        return requested_file
 
 
 def category_choice(path_to_list_categories, path_to_dico_categories):
