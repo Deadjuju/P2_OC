@@ -29,7 +29,7 @@ def one_category(labels, path_to_extract, path_to_list_categories, path_to_dico_
     category_name = category_name.replace(" ", "_")
     path_directory_category = path_to_extract_one_category / category_name
     path_directory_category.mkdir(exist_ok=True)
-    path_directory_img = path_directory_category / "img_directory"
+    path_directory_img = path_directory_category / "img"
     if cover:
         path_directory_img.mkdir(exist_ok=True)
     extract_file = f"{category_name}_extract.csv"
