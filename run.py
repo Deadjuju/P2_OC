@@ -18,6 +18,9 @@ LABELS = ["product_page_url",
           "review_rating",
           "image_url"]
 
+path_to_list_categories = "category_lists/category_list.json"
+path_to_dico_categories = "category_lists/dico_category_list.json"
+
 
 def user_choice():
     while True:
@@ -60,7 +63,10 @@ if choice == 1:
 
 if choice == 2:
     # Data from one category
-    one_category(labels=LABELS, path_to_extract=path_to_extract)
+    one_category(labels=LABELS,
+                 path_to_extract=path_to_extract,
+                 path_to_list_categories=path_to_list_categories,
+                 path_to_dico_categories=path_to_dico_categories)
 
 if choice == 3:
     # Data from the entire site

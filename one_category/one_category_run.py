@@ -8,9 +8,10 @@ from one_category.category_selector import category_choice
 END_MESSAGE = "INFORMATION: End of extraction"
 
 
-def one_category(labels, path_to_extract):
+def one_category(labels, path_to_extract, path_to_list_categories, path_to_dico_categories):
     # choose book category
-    choose_a_category = category_choice()
+    choose_a_category = category_choice(path_to_list_categories=path_to_list_categories,
+                                        path_to_dico_categories=path_to_dico_categories)
     url_category_to_scrap = choose_a_category[0]
     category_name = choose_a_category[1]
 

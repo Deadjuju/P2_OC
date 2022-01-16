@@ -1,7 +1,7 @@
 import json
 
 
-def load_file_if_exist(file: str):
+def load_file(file: str):
     """
     Checks if the desired file exists and loads it.
     If the file does not exist, the program stops.
@@ -12,32 +12,24 @@ def load_file_if_exist(file: str):
         Returns:
             list: requested file (list).
     """
-    try:
-        with open(file=file, mode="r", encoding="utf-8") as f:
-            requested_file = json.load(f)
-    except FileNotFoundError:
-        print(f"ERROR: -- {file} --\n"
-              f"This file does not exist, you can generate it by executing the python file:\n"
-              f"--> 'category_lists / list_categories_generator.py'. ")
-        exit()
-    else:
-        return requested_file
+    with open(file=file, mode="r", encoding="utf-8") as f:
+        requested_file = json.load(f)
+    return requested_file
 
 
-dico_list_category_file = "../category_lists/dico_category_list.json"
-category_list = "../category_lists/category_list.json"
-catego_dico = load_file_if_exist(file=dico_list_category_file)
-catego_list = load_file_if_exist(file=category_list)
-
-
-def category_choice():
+def category_choice(path_to_list_categories, path_to_dico_categories):
     """Asks the user to choose a category.
     Can display the list of all categories if needed.
 
                 Args:
+                    path_to_list_categories (str): path to the list with all categories
+                    path_to_dico_categories (str): path to the list of categories with url
                 Returns:
                     tuple: (first page url of the desired category, category name )
                 """
+    catego_dico = load_file(file=path_to_dico_categories)
+    catego_list = load_file(file=path_to_list_categories)
+
     while True:
         which_category = input("Please type the name of the category to scrape:\n"
                                "To see the categories type 'list'\n"
