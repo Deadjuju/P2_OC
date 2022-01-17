@@ -99,7 +99,7 @@ Les données sont stockées dans un dossier nommé **extract_entire_site** et cr
         + un **fichier jpg** pour chaque livre de la catégorie - *"nom_du_livre.jpg"* 
 
 ### 4. Mise à jour de la liste des catégories du site
-Dans le cas où le site **Books to Scrape** changerait le nom ou le nombre de ses catégories il est possible de mettre à jour dans le programme 2 listes:
+Dans le cas où le site **Books to Scrape** changerait le nom ou le nombre de ses catégories il est possible de mettre à jour dans le programme deux listes:
 + une liste contenant les noms de chaque catégorie
 + une liste associant le nom de la catégorie à sa page Url
 Pour mettre ces 2 listes à jour il faut se rendre dans le dossier category_lists.  
