@@ -1,9 +1,9 @@
 from pathlib import Path
 import time
 
-from one_product.one_product_run import one_book
-from one_category.one_category_run import one_category
-from entire_site.entire_site_run import entire_site
+from one_product.one_product_main import one_book
+from one_category.one_category_main import one_category
+from entire_site.entire_site_main import entire_site
 from art import welcome
 
 
