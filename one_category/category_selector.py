@@ -18,6 +18,9 @@ def load_file(file: str):
     except FileNotFoundError:
         print(f"ERROR: file - {file} does not exist."
               f"You can create it by running the script --> 'category_lists/list_categories_generator.py'.")
+    except TypeError:
+        print(f"ERROR: file - {file} does not exist."
+              f"You can create it by running the script --> 'category_lists/list_categories_generator.py'.")
     else:
         return requested_file
 
