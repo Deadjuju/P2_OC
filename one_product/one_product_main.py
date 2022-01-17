@@ -7,6 +7,13 @@ END_MESSAGE = "INFORMATION: End of extraction"
 
 
 def one_book(labels, path_to_extract_one_product):
+    """Instruction suite for extracting data from a single book.
+
+                Args:
+                    labels (list): Column headers of csv files.
+                    path_to_extract_one_product (WindowsPath): Path to extract the book.
+
+                """
     # type a correct url
     url = validate_url()
 
