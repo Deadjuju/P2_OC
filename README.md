@@ -30,9 +30,7 @@ Elles seront stockées dans un dossier, créé automatiquement à la racine du p
 Ce script fonctionne au **minimum** sur la version **Python 3.4**.   
 
 ### Environnement virtuel
-Ouvrir un terminal à la racine du dossier.  
-Les exemples sont écrit pour un terminal **Bash**.
-  
+Ouvrir un terminal à la racine du dossier.    
      
   1. Taper la commande suivante pour générer l'environnement virtuel:  
 
