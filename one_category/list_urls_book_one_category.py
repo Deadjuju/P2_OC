@@ -42,6 +42,7 @@ def get_urls_book_category(url_to_scrap: str):
                 Returns:
                     list: List of urls
                 """
+    # Store the category url, minus the ending ("index.html")
     url_to_scrap_without_index = url_to_scrap.split("index.html")[0]
 
     # Get the urls of the first page for each book
