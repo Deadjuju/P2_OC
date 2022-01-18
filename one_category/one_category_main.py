@@ -9,6 +9,15 @@ END_MESSAGE = "INFORMATION: End of extraction"
 
 
 def one_category(labels, path_to_extract, path_to_list_categories, path_to_dico_categories):
+    """Series of statements and executions to extract data from all books in a chosen category.
+
+                Args:
+                    labels (list):  Column headers of csv files.
+                    path_to_extract (WindowsPath): Path to extract the books.
+                    path_to_list_categories (str): Path to the list with categories name.
+                    path_to_dico_categories (str): Path to the list with categories {name: url}.
+                """
+
     # choose book category
     choose_a_category = category_choice(path_to_list_categories=path_to_list_categories,
                                         path_to_dico_categories=path_to_dico_categories)
@@ -29,9 +38,13 @@ def one_category(labels, path_to_extract, path_to_list_categories, path_to_dico_
     category_name = category_name.replace(" ", "_")
     path_directory_category = path_to_extract_one_category / category_name
     path_directory_category.mkdir(exist_ok=True)
+
+    # cover directory
     path_directory_img = path_directory_category / "img"
     if cover:
         path_directory_img.mkdir(exist_ok=True)
+
+    # file name
     extract_file = f"{category_name}_extract.csv"
 
     # extract data for each book, stock in a list
