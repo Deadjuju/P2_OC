@@ -98,17 +98,13 @@ def extract_cover(title: str, img_url: str, path_to_extract_images):
                 title (str): title of the book
                 img_url(str): url of the cover
                 path_to_extract_images (WindowsPath): path to save the cover
-
             """
     # format title
     title = format_text(string_to_format=title)
     # generate img
-    try:
-        with open(f'{path_to_extract_images}\\{title}.jpg', 'wb') as f:
-            img = requests.get(img_url)
-            f.write(img.content)
-    except FileNotFoundError:
-        print("INFORMATION: You must specify a path to save the images.")
+    with open(f'{path_to_extract_images}\\{title}.jpg', 'wb') as f:
+        img = requests.get(img_url)
+        f.write(img.content)
 
 
 def format_text(string_to_format):
