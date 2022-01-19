@@ -9,6 +9,13 @@ END_MESSAGE = "INFORMATION: End of extraction of entire site."
 
 
 def entire_site(labels, path_to_extract):
+    """Series of statements and executions to extract all data from the site.
+
+                Args:
+                    labels (list):  Column headers of csv files.
+                    path_to_extract (WindowsPath): Path to extract the books.
+                """
+
     # Extract cover True or False
     cover = extract_cover_choice()
 
@@ -16,6 +23,7 @@ def entire_site(labels, path_to_extract):
     path_to_extract_entire_site = path_to_extract / "extract_entire_site"
     path_to_extract_entire_site.mkdir(exist_ok=True)
 
+    # Load List [{category: url}]
     with open(file="category_lists/dico_category_list.json", mode="r", encoding="utf-8") as f:
         catego_dico = json.load(f)
 
